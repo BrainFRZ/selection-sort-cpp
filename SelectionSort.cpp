@@ -130,7 +130,7 @@ void SelectionSort::iterativeSort(int data[], const int size, SortDirection dire
 
 void SelectionSort::iterativeSort(std::vector<int> *data, SortDirection direction)
 {
-/*    int swapIndex = 0;
+    int swapIndex = 0;
     int swapValue = 0;
 
     for (int startIndex = static_cast<int>(data->size()) - 1; startIndex >= 0; startIndex--)
@@ -148,7 +148,7 @@ void SelectionSort::iterativeSort(std::vector<int> *data, SortDirection directio
         swapValue = data->at(swapIndex);
         data->at(swapIndex) = data->at(startIndex);
         data->at(startIndex) = swapValue;
-    }*/
+    }
 }
 
 void SelectionSort::recursiveSort(int data[], int start, SortDirection direction, bool recursiveSearch,
@@ -167,7 +167,7 @@ void SelectionSort::recursiveSort(int data[], int start, SortDirection direction
                 recursiveSort(data, start, direction, recursiveSearch,
                               recursiveSwapIndex(data, start, direction));
             }
-            else if (swapValue == NULL)
+            else if (swapValue == NULL_SWAP_VALUE)
             {
                 recursiveSort(data, start, direction, recursiveSearch,
                               swapIndex, data[swapIndex]);
@@ -216,7 +216,7 @@ void SelectionSort::recursiveSort(const std::vector<int> *oldData, std::vector<i
 
 }
 
-int SelectionSort::recursiveNextElement(const std::vector<int>* data, int start, SortDirection direction)
+int SelectionSort::recursiveNextElement(const std::vector<int> *data, int start, SortDirection direction)
 {
     return 0;
 }

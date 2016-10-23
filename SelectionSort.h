@@ -34,6 +34,9 @@ private:
     //Unassigned index with recursion
     static const int NULL_INDEX = -1;
 
+    //Unset swap value
+    static const int NULL_SWAP_VALUE = 0;
+
     enum SortDirection
     {
         ASCENDING, DESCENDING
@@ -70,13 +73,13 @@ private:
     void iterativeSort(std::vector<int> *data, SortDirection direction);
 
     void recursiveSort(int data[], int start, SortDirection direction, bool recursiveSearch,
-                       const int swapIndex = NULL_INDEX, int swapValue=NULL);
+                       const int swapIndex = NULL_INDEX, int swapValue=NULL_SWAP_VALUE);
 
     void recursiveSort(const std::vector<int> *oldData, std::vector<int> *newData, int start,
                        SortDirection direction, bool recursiveSearch);
 
     int recursiveSwapIndex(const int data[], int start, SortDirection direction,
-                           int swapValue=NULL);
+                           int swapValue=NULL_SWAP_VALUE);
 
     int recursiveNextElement(const std::vector<int> *data, int start, SortDirection direction);
 
