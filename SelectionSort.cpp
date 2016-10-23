@@ -32,33 +32,33 @@ void SelectionSort::go()
     copyArray(unsortedArray, sortedArray, TEST_LIST_LENGTH);
 
     direction = promptSortDirection();
-//    printData(unsortedArray, TEST_LIST_LENGTH);
+    printData(unsortedArray, TEST_LIST_LENGTH);
 
     std::cout << "Iterative sort: ";
     iterativeSort(sortedArray, TEST_LIST_LENGTH, direction);
-//    printData(sortedArray, TEST_LIST_LENGTH);
+    printData(sortedArray, TEST_LIST_LENGTH);
     printSortTest(sortedArray, TEST_LIST_LENGTH, direction);
 
     std::cout << "Recursive sort: ";
     copyArray(unsortedArray, sortedArray, TEST_LIST_LENGTH);
     recursiveSort(sortedArray, TEST_LIST_LENGTH - 1, direction, true);
     printSortTest(sortedArray, TEST_LIST_LENGTH, direction);
-//    printData(sortedArray, TEST_LIST_LENGTH);
+    printData(sortedArray, TEST_LIST_LENGTH);
 
-/*    std::cout << std::endl << "Vector sort" << std::endl;
+    std::cout << std::endl << "Vector sort" << std::endl;
     unsortedVector = std::vector<int>(TEST_LIST_LENGTH);
     fillRandomIntList(&unsortedVector, TEST_LIST_LENGTH);
     printData(&unsortedVector, TEST_LIST_LENGTH);
 
-    sortedVector = std::vector<int>(unsortedVector);
-    iterativeSort(&sortedVector, true);
-    printData(&sortedVector, TEST_LIST_LENGTH);*/
+    sortedVector = std::vector<int>();
+    iterativeSort(&sortedVector, direction);
+    printData(&sortedVector, TEST_LIST_LENGTH);
 }
 
 
 
 template<class T>
-void SelectionSort::fillRandomIntList(T *list, const int size)
+void SelectionSort::fillRandomIntList(T list, const int size)
 {
     for (int index = 0; index < size; index++)
     {
@@ -244,7 +244,7 @@ SelectionSort::SortDirection SelectionSort::promptSortDirection()
 
 
 template<class T>
-void SelectionSort::printData(const T *data, const int size)
+void SelectionSort::printData(const T data, const int size)
 {
     for (int index = 0; index < size; index++)
     {

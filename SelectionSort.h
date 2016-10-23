@@ -20,10 +20,10 @@ class SelectionSort
 {
 private:
     //The default length of the small tester array/vector
-    static const unsigned int TEST_LIST_LENGTH = 1776;
+    static const int TEST_LIST_LENGTH = 20;
 
     //The default length of the large array/vector
-    static const unsigned int LARGE_LIST_LENGTH = 10000;
+    static const int LARGE_LIST_LENGTH = 10000;
 
     //The largest possible value in the array
     static const int MAX_VALUE = 100;
@@ -52,8 +52,8 @@ private:
     std::vector<int> sortedVector;
 
 
-    //Generates a random array of integers between 0 and MAX_VALUE
-    template<class T> void fillRandomIntList(T *list, const int size);
+    //Generates a random list of integers between 1 and MAX_VALUE
+    template<class T> void fillRandomIntList(T list, const int size);
 
     //Copies an array to a new one
     void copyArray(const int oldData[], int newData[], const int size);
@@ -84,7 +84,7 @@ private:
     SortDirection promptSortDirection();
 
 
-    template<class T> void printData(const T *data, const int size);
+    template<class T> void printData(const T data, const int size);
 
 public:
     //Constructs a new selection sort object
