@@ -23,7 +23,7 @@ private:
     static const int TEST_LIST_LENGTH = 20;
 
     //The default length of the large array/vector
-    static const int LARGE_LIST_LENGTH = 10000;
+    static const int LARGE_LIST_LENGTH = 5001;
 
     //The largest possible value in the array
     static const int MAX_VALUE = 100;
@@ -37,9 +37,17 @@ private:
     //Unset swap value
     static const int NULL_SWAP_VALUE = 0;
 
+    //Maximum list size to do a recursive search
+    static const int MAX_RECURSIVE_SEARCH = 1500;
+
     enum SortDirection
     {
         ASCENDING, DESCENDING
+    };
+
+    enum ListType
+    {
+        ARRAY, VECTOR
     };
 
     //Unsorted array
@@ -61,31 +69,37 @@ private:
     //Copies an array to a new one
     void copyArray(const int oldData[], int newData[], const int size);
 
-    //Tests the sorted arrays to make sure they're successfully sorted
-    void printSortTest(const int data[], const int size, SortDirection direction);
+    bool shouldSwap(const SortDirection direction, const int current, const int compareTo);
 
-    bool shouldSwap(SortDirection direction, int current, int compareTo);
+    template<class T> int iterativeSwapIndex(T &data, const int size, const SortDirection direction);
 
-    template<class T> int iterativeSwapIndex(T &data, const int size, SortDirection direction);
+    void iterativeSort(int data[], const int size, const SortDirection direction);
 
-    void iterativeSort(int data[], const int size, SortDirection direction);
+    void iterativeSort(std::vector<int> &data, const SortDirection direction);
 
-    void iterativeSort(std::vector<int> &data, SortDirection direction);
+    void recursiveSort(int data[], int start, const SortDirection direction,
+                       int swapIndex = NULL_INDEX, int swapValue = NULL_SWAP_VALUE);
 
-    void recursiveSort(int data[], int &start, const SortDirection &direction, bool recursiveSearch,
-                       int swapIndex = NULL_INDEX, int swapValue=NULL_SWAP_VALUE);
+    void recursiveSort(std::vector<int> &oldData, std::vector<int> &newData, const int start,
+                       const SortDirection direction, const int swapIndex = NULL_INDEX);
 
-    void recursiveSort(std::vector<int> &oldData, std::vector<int> &newData, int &start,
-                       SortDirection &direction, bool recursiveSearch, int swapIndex = NULL_INDEX);
+    template<class T>int recursiveSwapIndex(const T &data, const int start, const SortDirection direction,
+                                            int swapValue = NULL_SWAP_VALUE);
 
-    template<class T>int recursiveSwapIndex(const T &data, int start, SortDirection direction,
-                                            int swapValue=NULL_SWAP_VALUE);
+    void runArraySort(const int size, const SortDirection direction, const bool print);
 
+    void runVectorSort(const int size, const SortDirection direction, const bool print);
 
     SortDirection promptSortDirection();
 
 
     template<class T> void printData(const T &data, const int size);
+
+    //Tests the sorted arrays to make sure they're successfully sorted
+    template<class T> void printSortTest(const T &data, const int size, SortDirection direction);
+
+    template<class T> void printResult(const T &data, const int size, const bool printList,
+                                       const SortDirection direction);
 
 public:
     //Constructs a new selection sort object
