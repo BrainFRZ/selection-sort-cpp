@@ -56,7 +56,7 @@ private:
 
 
     //Generates a random list of integers between 1 and MAX_VALUE
-    template<class T> void fillRandomIntList(T list, const int size);
+    template<class T> void fillRandomIntList(T &list, const int size);
 
     //Copies an array to a new one
     void copyArray(const int oldData[], int newData[], const int size);
@@ -70,24 +70,24 @@ private:
 
     void iterativeSort(int data[], const int size, SortDirection direction);
 
-    void iterativeSort(std::vector<int> *data, SortDirection direction);
+    void iterativeSort(std::vector<int> &data, SortDirection direction);
 
     void recursiveSort(int data[], int start, SortDirection direction, bool recursiveSearch,
                        const int swapIndex = NULL_INDEX, int swapValue=NULL_SWAP_VALUE);
 
-    void recursiveSort(const std::vector<int> *oldData, std::vector<int> *newData, int start,
+    void recursiveSort(const std::vector<int> &oldData, std::vector<int> &newData, int start,
                        SortDirection direction, bool recursiveSearch);
 
     int recursiveSwapIndex(const int data[], int start, SortDirection direction,
                            int swapValue=NULL_SWAP_VALUE);
 
-    int recursiveNextElement(const std::vector<int> *data, int start, SortDirection direction);
+    int recursiveNextElement(const std::vector<int> &data, int start, SortDirection direction);
 
 
     SortDirection promptSortDirection();
 
 
-    template<class T> void printData(const T data, const int size);
+    template<class T> void printData(const T &data, const int size);
 
 public:
     //Constructs a new selection sort object

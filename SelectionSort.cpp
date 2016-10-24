@@ -37,28 +37,26 @@ void SelectionSort::go()
     std::cout << "Iterative sort: ";
     iterativeSort(sortedArray, TEST_LIST_LENGTH, direction);
     printData(sortedArray, TEST_LIST_LENGTH);
-    printSortTest(sortedArray, TEST_LIST_LENGTH, direction);
 
     std::cout << "Recursive sort: ";
     copyArray(unsortedArray, sortedArray, TEST_LIST_LENGTH);
     recursiveSort(sortedArray, TEST_LIST_LENGTH - 1, direction, true);
-    printSortTest(sortedArray, TEST_LIST_LENGTH, direction);
     printData(sortedArray, TEST_LIST_LENGTH);
 
     std::cout << std::endl << "Vector sort" << std::endl;
     unsortedVector = std::vector<int>(TEST_LIST_LENGTH);
-    fillRandomIntList(&unsortedVector, TEST_LIST_LENGTH);
-    printData(&unsortedVector, TEST_LIST_LENGTH);
+    fillRandomIntList(unsortedVector, TEST_LIST_LENGTH);
+    printData(unsortedVector, TEST_LIST_LENGTH);
 
-    sortedVector = std::vector<int>();
-    iterativeSort(&sortedVector, direction);
-    printData(&sortedVector, TEST_LIST_LENGTH);
+    sortedVector = std::vector<int>(unsortedVector);
+    iterativeSort(sortedVector, direction);
+    printData(sortedVector, TEST_LIST_LENGTH);
 }
 
 
 
 template<class T>
-void SelectionSort::fillRandomIntList(T list, const int size)
+void SelectionSort::fillRandomIntList(T &list, const int size)
 {
     for (int index = 0; index < size; index++)
     {
@@ -82,6 +80,7 @@ void SelectionSort::printSortTest(const int data[], const int size, SortDirectio
         {
             std::cout << "Incorrectly sorted. " << data[index] << " (index " << index
                       << ") is after " << data[index - 1] << std::endl;
+            return;
         }
     }
 
@@ -128,26 +127,26 @@ void SelectionSort::iterativeSort(int data[], const int size, SortDirection dire
     }
 }
 
-void SelectionSort::iterativeSort(std::vector<int> *data, SortDirection direction)
+void SelectionSort::iterativeSort(std::vector<int> &data, SortDirection direction)
 {
     int swapIndex = 0;
     int swapValue = 0;
 
-    for (int startIndex = static_cast<int>(data->size()) - 1; startIndex >= 0; startIndex--)
+    for (int startIndex = static_cast<int>(data.size()) - 1; startIndex >= 0; startIndex--)
     {
         swapIndex = startIndex;
 
         for (int searchIndex = startIndex; searchIndex >= 0; searchIndex--)
         {
-            if (data->at(searchIndex) > data->at(swapIndex))
+            if (data.at(searchIndex) > data.at(swapIndex))
             {
                 swapIndex = searchIndex;
             }
         }
 
-        swapValue = data->at(swapIndex);
-        data->at(swapIndex) = data->at(startIndex);
-        data->at(startIndex) = swapValue;
+        swapValue = data.at(swapIndex);
+        data.at(swapIndex) = data.at(startIndex);
+        data.at(startIndex) = swapValue;
     }
 }
 
@@ -210,13 +209,13 @@ int SelectionSort::recursiveSwapIndex(const int data[], int start, SortDirection
     }
 }
 
-void SelectionSort::recursiveSort(const std::vector<int> *oldData, std::vector<int> *newData,
+void SelectionSort::recursiveSort(const std::vector<int> &oldData, std::vector<int> &newData,
                                   int start, SortDirection direction, bool recursiveSearch)
 {
 
 }
 
-int SelectionSort::recursiveNextElement(const std::vector<int> *data, int start, SortDirection direction)
+int SelectionSort::recursiveNextElement(const std::vector<int> &data, int start, SortDirection direction)
 {
     return 0;
 }
@@ -244,7 +243,7 @@ SelectionSort::SortDirection SelectionSort::promptSortDirection()
 
 
 template<class T>
-void SelectionSort::printData(const T data, const int size)
+void SelectionSort::printData(const T &data, const int size)
 {
     for (int index = 0; index < size; index++)
     {
