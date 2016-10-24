@@ -66,22 +66,20 @@ private:
 
     bool shouldSwap(SortDirection direction, int current, int compareTo);
 
-    int iterativeSwapIndex(int data[], const int size, SortDirection direction);
+    template<class T> int iterativeSwapIndex(T &data, const int size, SortDirection direction);
 
     void iterativeSort(int data[], const int size, SortDirection direction);
 
     void iterativeSort(std::vector<int> &data, SortDirection direction);
 
-    void recursiveSort(int data[], int start, SortDirection direction, bool recursiveSearch,
-                       const int swapIndex = NULL_INDEX, int swapValue=NULL_SWAP_VALUE);
+    void recursiveSort(int data[], int &start, const SortDirection &direction, bool recursiveSearch,
+                       int swapIndex = NULL_INDEX, int swapValue=NULL_SWAP_VALUE);
 
-    void recursiveSort(const std::vector<int> &oldData, std::vector<int> &newData, int start,
-                       SortDirection direction, bool recursiveSearch);
+    void recursiveSort(std::vector<int> &oldData, std::vector<int> &newData, int &start,
+                       SortDirection &direction, bool recursiveSearch, int swapIndex = NULL_INDEX);
 
-    int recursiveSwapIndex(const int data[], int start, SortDirection direction,
-                           int swapValue=NULL_SWAP_VALUE);
-
-    int recursiveNextElement(const std::vector<int> &data, int start, SortDirection direction);
+    template<class T>int recursiveSwapIndex(const T &data, int start, SortDirection direction,
+                                            int swapValue=NULL_SWAP_VALUE);
 
 
     SortDirection promptSortDirection();

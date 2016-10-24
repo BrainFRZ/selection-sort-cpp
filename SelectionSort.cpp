@@ -39,8 +39,9 @@ void SelectionSort::go()
     printData(sortedArray, TEST_LIST_LENGTH);
 
     std::cout << "Recursive sort: ";
+    int start = TEST_LIST_LENGTH - 1;
     copyArray(unsortedArray, sortedArray, TEST_LIST_LENGTH);
-    recursiveSort(sortedArray, TEST_LIST_LENGTH - 1, direction, true);
+    recursiveSort(sortedArray, start, direction, true);
     printData(sortedArray, TEST_LIST_LENGTH);
 
     std::cout << std::endl << "Vector sort" << std::endl;
@@ -48,8 +49,15 @@ void SelectionSort::go()
     fillRandomIntList(unsortedVector, TEST_LIST_LENGTH);
     printData(unsortedVector, TEST_LIST_LENGTH);
 
+    std::cout << "Iterative sort: ";
     sortedVector = std::vector<int>(unsortedVector);
     iterativeSort(sortedVector, direction);
+    printData(sortedVector, TEST_LIST_LENGTH);
+
+    std::cout << "Recursive sort: ";
+    start = TEST_LIST_LENGTH - 1;
+    sortedVector.clear();
+    recursiveSort(unsortedVector, sortedVector, start, direction, true);
     printData(sortedVector, TEST_LIST_LENGTH);
 }
 
@@ -97,7 +105,8 @@ bool SelectionSort::shouldSwap(SortDirection direction, int current, int compare
 }
 
 
-int SelectionSort::iterativeSwapIndex(int data[], int startIndex, SortDirection direction)
+template<class T>
+int SelectionSort::iterativeSwapIndex(T &data, int startIndex, SortDirection direction)
 {
     int swapIndex = 0;
 
@@ -150,7 +159,7 @@ void SelectionSort::iterativeSort(std::vector<int> &data, SortDirection directio
     }
 }
 
-void SelectionSort::recursiveSort(int data[], int start, SortDirection direction, bool recursiveSearch,
+void SelectionSort::recursiveSort(int data[], int &start, const SortDirection &direction, bool recursiveSearch,
                                   int swapIndex, int swapValue)
 {
     if (start <= 0)
@@ -182,13 +191,49 @@ void SelectionSort::recursiveSort(int data[], int start, SortDirection direction
         }
         else
         {
-            recursiveSort(data, start - 1, direction, recursiveSearch);
-            //data[start] = iterativeNextElement(data, start);
+            swapIndex = iterativeSwapIndex(data, start, direction);
+            swapValue = data[swapIndex];
+            data[swapIndex] = data[start];
+            data[start] = swapValue;
+            recursiveSort(data, --start, direction, recursiveSearch);
         }
     }
 }
 
-int SelectionSort::recursiveSwapIndex(const int data[], int start, SortDirection direction,
+void SelectionSort::recursiveSort(std::vector<int> &oldData, std::vector<int> &newData, int &start,
+                                  SortDirection &direction, bool recursiveSearch, int swapIndex)
+{
+    if (start < 0)
+    {
+        return;
+    }
+    else
+    {
+        if (swapIndex == NULL_INDEX)
+        {
+            recursiveSort(oldData, newData, start, direction, recursiveSearch,
+                            recursiveSwapIndex(oldData, start, direction));
+        }
+        else if (recursiveSearch)
+        {
+            newData.insert(newData.begin(), oldData.at(swapIndex));
+            oldData.erase(oldData.begin() + swapIndex);
+            start -= 1;
+            recursiveSort(oldData, newData, start, direction, recursiveSearch,
+                            recursiveSwapIndex(oldData, start, direction));
+        }
+        else
+        {
+            swapIndex = iterativeSwapIndex(oldData, start, direction);
+            newData.insert(newData.begin(), oldData.at(swapIndex));
+            oldData.erase(oldData.begin() + swapIndex);
+            recursiveSort(oldData, newData, --start, direction, recursiveSearch);
+        }
+    }
+}
+
+template<class T>
+int SelectionSort::recursiveSwapIndex(const T &data, int start, SortDirection direction,
                                       int swapIndex)
 {
     if (start < 0)
@@ -207,17 +252,6 @@ int SelectionSort::recursiveSwapIndex(const int data[], int start, SortDirection
     {
         return recursiveSwapIndex(data, start - 1, direction, swapIndex);
     }
-}
-
-void SelectionSort::recursiveSort(const std::vector<int> &oldData, std::vector<int> &newData,
-                                  int start, SortDirection direction, bool recursiveSearch)
-{
-
-}
-
-int SelectionSort::recursiveNextElement(const std::vector<int> &data, int start, SortDirection direction)
-{
-    return 0;
 }
 
 
